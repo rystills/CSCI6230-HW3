@@ -1,4 +1,4 @@
-import numpy
+import math
 
 """apply Blum Goldwasser Probabilistic Algorithm (encryption) to the specified message
 @param m: the message to encrypt
@@ -10,8 +10,8 @@ import numpy
 def BGPEnc(m,p=499,q=547,x0=159201):
     #calculations just following the algorithm
     n=p*q
-    k = int(numpy.log2(n))
-    h = int(numpy.log2(k))
+    k = int(math.log(n,2))
+    h = int(math.log(k,2))
     t = len(m)//h
     #mts stores the values m_i from 1 to t; stored as strings for easy bit splicing
     mts = [m[i*h:i*h+h] for i in range(t)]
@@ -49,8 +49,8 @@ def gcd(x,y):
 def BGPDec(m,x,p=499,q=547,a=-57,b=52):
     #calculations just following the algorithm
     n=p*q
-    k = int(numpy.log2(n))
-    h = int(numpy.log2(k))
+    k = int(math.log(n,2))
+    h = int(math.log(k,2))
     t = len(m)//h
     
     d1 = pow(((p+1)//4), t+1, p-1)
