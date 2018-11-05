@@ -14,16 +14,16 @@ def BGPEnc(m,p=499,q=547,x0=159201):
     h = int(math.log(k,2))
     t = len(m)//h
     #mts stores the values m_i from 1 to t; stored as strings for easy bit splicing
-    mts = [m[i*h:i*h+h] for i in range(t)]
+    mts = [m[i*h:i*h+h] for i in range(t+1)]
     c = []
     for m in mts:
         x0 = pow(x0, 2, n)
         #convert to a binary string to extract the last h elements
         pi = str(bin(x0))[-h:]
-        for i in range(h):
+        for i in range(len(m)):
             #manual bitwise or implementation for strings of bits
             c.append(1 if pi[i] != str(m[i]) else 0)
-    return c,pow(x0, 2, n)
+    return c,x0
 
 """quick and dirty greatest common divisor calculation
 @param x: first value for divisor check
@@ -59,13 +59,13 @@ def BGPDec(m,x,p=499,q=547,a=-57,b=52):
     v = pow(x, d2, q)
     x0 = (v*a*p + u*b*q) % n
     #mts stores the values m_i from 1 to t; stored as strings for easy bit splicing
-    mts = [m[i*h:i*h+h] for i in range(t)]
+    mts = [m[i*h:i*h+h] for i in range(t+1)]
     c = []
     for m in mts:
         x0 = pow(x0, 2, n)
         #convert to a binary string to extract the last h elements
         pi = str(bin(x0))[-h:]
-        for i in range(h):
+        for i in range(len(m)):
             #manual bitwise or implementation for strings of bits
             c.append(1 if pi[i] != str(m[i]) else 0)
     return c
