@@ -44,10 +44,9 @@ def gcd(x,y):
 @param q: second Blum prime
 @param a: first provided value
 @param b: second provided value
-@param x0: random seed 
 @returns: the result of decrypting the specified message with the specified parameters using the Blum Goldwasser algorithm
 """
-def BGPDec(m,x,p=499,q=547,a=-57,b=52,x0=159201):
+def BGPDec(m,x,p=499,q=547,a=-57,b=52):
     #calculations just following the algorithm
     n=p*q
     k = int(numpy.log2(n))
@@ -58,7 +57,7 @@ def BGPDec(m,x,p=499,q=547,a=-57,b=52,x0=159201):
     d2 = pow(((q+1)//4), t+1, q-1)
     u = pow(x, d1, p)
     v = pow(x, d2, q)
-    x = (v*a*p + u*b*q) % n
+    x0 = (v*a*p + u*b*q) % n
     #mts stores the values m_i from 1 to t; stored as strings for easy bit splicing
     mts = [m[i*h:i*h+h] for i in range(t)]
     c = []
